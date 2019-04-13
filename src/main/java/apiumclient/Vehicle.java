@@ -1,19 +1,22 @@
 package apiumclient;
 
+import java.util.Date;
+
 public class Vehicle {
 
     private final float lan;
     private final float lon;
-    // TODO(zxcv22z): investigate data type
-    // private <Date> Time
     private final int lines;
     private final int brigade;
+    //TODO(zxcv22z): investigate data type
+    private final Date date;
 
-    public Vehicle(float lan, float lon, int lines, int brigade) {
+    public Vehicle(float lan, float lon, Date date, int lines, int brigade) {
         this.lan = lan;
         this.lon = lon;
         this.lines = lines;
         this.brigade = brigade;
+        this.date = date;
     }
 
     public float getLan() {
@@ -30,6 +33,10 @@ public class Vehicle {
 
     public int getBrigade() {
         return brigade;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
 }

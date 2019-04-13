@@ -5,14 +5,18 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 public class Client {
 
-    public Client() {
+    private final static Logger logger = LogManager.getLogger(Client.class.getName());
+
+    private Client() {
 
     }
 
@@ -81,17 +85,17 @@ public class Client {
     public static void main(String[] args) {
         Client c = new Client();
 
+        logger.error("LOG IS CONFIGURE CORRECTLY!");
+
         Map<String, String> map = new TreeMap<>();
-        map.put("resource_id", "f2e5503e-927d-4ad3-9500-4ab9e55deb59");
-        map.put("apikey", "undisclosed");
+        map.put("sa", "f2e5503e-927d-4ad3-9500-4ab9e55deb59");
+        map.put("apikey", "---");
         map.put("type", "1");
         map.put("line", "523");
         try {
             String str = c.downloadData(map);
             System.out.println(str);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
     }
