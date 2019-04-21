@@ -3,13 +3,13 @@ package client;
 import java.util.List;
 
 class EndpointResult {
-    private final List<Vehicle> result;
+    private List<Vehicle> result;
 
     EndpointResult(List<Vehicle> result) {
         this.result = result;
     }
 
-    final List<Vehicle> getResult() {
+    List<Vehicle> getResult() {
         return result;
     }
 }

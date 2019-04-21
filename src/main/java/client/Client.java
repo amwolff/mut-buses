@@ -21,7 +21,7 @@ public interface Client {
     static InputStream downloadData(Map<String, String> requestParameters) throws IOException {
         String targetURL = "https://api.um.warszawa.pl/api/action/busestrams_get/";
         for (Map.Entry<String, String> entry : requestParameters.entrySet()) {
-            targetURL = Client.appendParameter(targetURL, entry.getKey(), entry.getValue());
+            targetURL = appendParameter(targetURL, entry.getKey(), entry.getValue());
         }
 
         HttpsURLConnection connection = (HttpsURLConnection) new URL(targetURL).openConnection();

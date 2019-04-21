@@ -12,8 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DefaultClient implements Client {
+public final class DefaultClient implements Client {
     private final Map<String, String> defaultParams = new HashMap<>();
+    private final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
     public DefaultClient(String apiKey) {
         defaultParams.put("resource_id", "f2e5503e-927d-4ad3-9500-4ab9e55deb59");
@@ -21,7 +22,7 @@ public class DefaultClient implements Client {
     }
 
     @Override
-    public final List<Vehicle> getVehicles(Integer type, Integer line, Integer brigade) throws IOException {
+    public List<Vehicle> getVehicles(Integer type, Integer line, Integer brigade) throws IOException {
         Map<String, String> params = new HashMap<>(defaultParams);
         params.put("type", type.toString());
         if (line != null) {
@@ -32,24 +33,22 @@ public class DefaultClient implements Client {
         }
 
         try (InputStream inputStream = Client.downloadData(params)) {
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
-            EndpointResult vehiclesResult = gson.fromJson(
-                    new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)),
-                    EndpointResult.class
-            );
-            return vehiclesResult.getResult();
+            EndpointResult endpointResult = gson.fromJson(
+                    new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)), EndpointResult.class);
+
+            return endpointResult.getResult();
         } catch (IOException exc) {
             throw new IOException("Problem accessing api.um.warszawa.pl services", exc);
         }
     }
 
     @Override
-    public final List<Vehicle> getVehicles(Integer type, Integer lineNum) throws IOException {
+    public List<Vehicle> getVehicles(Integer type, Integer lineNum) throws IOException {
         return getVehicles(type, lineNum, null);
     }
 
     @Override
-    public final List<Vehicle> getVehicles(Integer type) throws IOException {
+    public List<Vehicle> getVehicles(Integer type) throws IOException {
         return getVehicles(type, null, null);
     }
 }

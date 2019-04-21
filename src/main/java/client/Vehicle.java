@@ -28,23 +28,23 @@ public class Vehicle {
         this(v.lat, v.lon, v.time, v.lines, v.brigade);
     }
 
-    public final float getLat() {
+    public float getLat() {
         return lat;
     }
 
-    public final float getLon() {
+    public float getLon() {
         return lon;
     }
 
-    public final Date getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public final int getLines() {
+    public int getLines() {
         return lines;
     }
 
-    public final int getBrigade() {
+    public int getBrigade() {
         return brigade;
     }
 }

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultClientTest {
 
-    private String apiKeyForTests = "";
+    private static String apiKeyForTests = "";
 
     @BeforeEach
     void setUp() throws IOException {
