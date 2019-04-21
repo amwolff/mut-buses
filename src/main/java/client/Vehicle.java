@@ -1,12 +1,19 @@
 package client;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Vehicle {
+    @SerializedName("Lat")
     private final float lat;
+    @SerializedName("Lon")
     private final float lon;
+    @SerializedName("Time")
     private final Date time;
+    @SerializedName("Lines")
     private final int lines;
+    @SerializedName("Brigade")
     private final int brigade;
 
     public Vehicle(float lat, float lon, Date time, int lines, int brigade) {
@@ -21,23 +28,23 @@ public class Vehicle {
         this(v.lat, v.lon, v.time, v.lines, v.brigade);
     }
 
-    public float getLat() {
+    public final float getLat() {
         return lat;
     }
 
-    public float getLon() {
+    public final float getLon() {
         return lon;
     }
 
-    public Date getTime() {
+    public final Date getTime() {
         return time;
     }
 
-    public int getLines() {
+    public final int getLines() {
         return lines;
     }
 
-    public int getBrigade() {
+    public final int getBrigade() {
         return brigade;
     }
 }
