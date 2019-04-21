@@ -1,4 +1,4 @@
-package apiumclient;
+package client;
 
 import java.util.Date;
 
@@ -15,6 +15,10 @@ public class Vehicle {
         this.lines = lines;
         this.brigade = brigade;
         this.time = time;
+    }
+
+    public Vehicle(Vehicle v) {
+        this(v.lat, v.lon, v.time, v.lines, v.brigade);
     }
 
     public float getLat() {
