@@ -12,27 +12,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class DefaultClient implements Client {
+public final class DefaultAPIClient implements APIClient {
     private final Map<String, String> defaultParams = new HashMap<>();
     private final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-    public DefaultClient(String apiKey) {
+    public DefaultAPIClient(String apiKey) {
         defaultParams.put("resource_id", "f2e5503e-927d-4ad3-9500-4ab9e55deb59");
         defaultParams.put("apikey", apiKey);
     }
 
     @Override
-    public List<Vehicle> getVehicles(Integer type, Integer line, Integer brigade) throws IOException {
+    public List<Vehicle> getVehicles(Integer type, String line, Integer brigade) throws IOException {
         Map<String, String> params = new HashMap<>(defaultParams);
         params.put("type", type.toString());
         if (line != null) {
-            params.put("line", line.toString());
+            params.put("line", line);
         }
         if (brigade != null) {
             params.put("brigade", brigade.toString());
         }
 
-        try (InputStream inputStream = Client.downloadData(params)) {
+        try (InputStream inputStream = APIClient.downloadData(params)) {
             EndpointResult endpointResult = gson.fromJson(
                     new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)), EndpointResult.class);
 
@@ -43,7 +43,7 @@ public final class DefaultClient implements Client {
     }
 
     @Override
-    public List<Vehicle> getVehicles(Integer type, Integer lineNum) throws IOException {
+    public List<Vehicle> getVehicles(Integer type, String lineNum) throws IOException {
         return getVehicles(type, lineNum, null);
     }
 

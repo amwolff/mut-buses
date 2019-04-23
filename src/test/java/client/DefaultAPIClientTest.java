@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DefaultClientTest {
+class DefaultAPIClientTest {
 
     private static String apiKeyForTests = "";
 
@@ -31,14 +31,14 @@ class DefaultClientTest {
 
     @Test
     void getVehicles() throws IOException {
-        DefaultClient client = new DefaultClient(apiKeyForTests);
-        List<Vehicle> vehicles = client.getVehicles(1, 523);
+        DefaultAPIClient client = new DefaultAPIClient(apiKeyForTests);
+        List<Vehicle> vehicles = client.getVehicles(1, "523");
 
         vehicles.forEach(vehicle -> {
             assertNotEquals(0, vehicle.getLat());
             assertNotEquals(0, vehicle.getLon());
             assertNotNull(vehicle.getTime());
-            assertNotEquals(0, vehicle.getLines());
+            assertFalse(vehicle.getLines().trim().isEmpty());
             assertNotEquals(0, vehicle.getBrigade());
         });
     }

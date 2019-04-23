@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-public interface Client {
+public interface APIClient {
     private static String appendParameter(String url, String paramKey, String paramValue) {
         if (url == null || url.trim().isEmpty()) {
             return url;
@@ -31,9 +31,9 @@ public interface Client {
         return connection.getInputStream();
     }
 
-    List<Vehicle> getVehicles(Integer type, Integer line, Integer brigade) throws IOException;
+    List<Vehicle> getVehicles(Integer type, String line, Integer brigade) throws IOException;
 
-    List<Vehicle> getVehicles(Integer type, Integer line) throws IOException;
+    List<Vehicle> getVehicles(Integer type, String line) throws IOException;
 
     List<Vehicle> getVehicles(Integer type) throws IOException;
 }

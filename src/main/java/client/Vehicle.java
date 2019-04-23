@@ -12,11 +12,11 @@ public class Vehicle {
     @SerializedName("Time")
     private final Date time;
     @SerializedName("Lines")
-    private final int lines;
+    private final String lines;
     @SerializedName("Brigade")
     private final int brigade;
 
-    public Vehicle(float lat, float lon, Date time, int lines, int brigade) {
+    public Vehicle(float lat, float lon, Date time, String lines, int brigade) {
         this.lat = lat;
         this.lon = lon;
         this.lines = lines;
@@ -40,7 +40,7 @@ public class Vehicle {
         return time;
     }
 
-    public int getLines() {
+    public String getLines() {
         return lines;
     }
 
