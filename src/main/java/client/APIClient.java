@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface APIClient {
+    String baseURL = "https://api.um.warszawa.pl/api/action/busestrams_get/";
+
     private static String appendParameter(String url, String paramKey, String paramValue) {
         if (url == null || url.trim().isEmpty()) {
             return url;
@@ -19,7 +21,7 @@ public interface APIClient {
     }
 
     static InputStream downloadData(Map<String, String> requestParameters) throws IOException {
-        String targetURL = "https://api.um.warszawa.pl/api/action/busestrams_get/";
+        String targetURL = baseURL;
         for (Map.Entry<String, String> entry : requestParameters.entrySet()) {
             targetURL = appendParameter(targetURL, entry.getKey(), entry.getValue());
         }
