@@ -13,11 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 public final class DefaultAPIClient implements APIClient {
+    private final String apiResourceID = "f2e5503e-927d-4ad3-9500-4ab9e55deb59";
     private final Map<String, String> defaultParams = new HashMap<>();
     private final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
     public DefaultAPIClient(String apiKey) {
-        defaultParams.put("resource_id", "f2e5503e-927d-4ad3-9500-4ab9e55deb59");
+        defaultParams.put("resource_id", apiResourceID);
         defaultParams.put("apikey", apiKey);
     }
 

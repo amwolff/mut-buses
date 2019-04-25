@@ -16,6 +16,13 @@ public final class InMemoryVehicleStore implements VehicleStore {
     }
 
     @Override
+    public void insert(List<Vehicle> vehicles) {
+        for (Vehicle vehicle : vehicles) {
+            insert(vehicle);
+        }
+    }
+
+    @Override
     public List<Vehicle> retrieveAll() {
         return new LinkedList<>(inMemDb.values());
     }
