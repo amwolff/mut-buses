@@ -24,7 +24,7 @@ public final class DefaultAPIClient implements APIClient {
 
     @Override
     public List<Vehicle> getVehicles(Integer type, String line, Integer brigade) throws IOException {
-        Map<String, String> params = new HashMap<>(defaultParams);
+        final Map<String, String> params = new HashMap<>(defaultParams);
         params.put("type", type.toString());
         if (line != null) {
             params.put("line", line);
@@ -34,7 +34,7 @@ public final class DefaultAPIClient implements APIClient {
         }
 
         try (InputStream inputStream = APIClient.downloadData(params)) {
-            EndpointResult endpointResult = gson.fromJson(
+            final EndpointResult endpointResult = gson.fromJson(
                     new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)), EndpointResult.class);
 
             return endpointResult.getResult();
