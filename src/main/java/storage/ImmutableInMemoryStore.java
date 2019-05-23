@@ -13,9 +13,9 @@ public final class ImmutableInMemoryStore implements VehicleStore {
 
     @Override
     public void insert(Vehicle vehicle) { // shouldn't be used really
-        final CopyOnWriteArrayList<Vehicle> br = new CopyOnWriteArrayList<>();
-        br.add(vehicle);
-        inMemDb.put(vehicle.getLines(), br);
+        final CopyOnWriteArrayList<Vehicle> replacement = new CopyOnWriteArrayList<>();
+        replacement.add(vehicle);
+        inMemDb.put(vehicle.getLines(), replacement);
     }
 
     @Override
