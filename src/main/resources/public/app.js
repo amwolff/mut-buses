@@ -353,7 +353,7 @@ function addDummyLayerGroup(map, ctx) {
 const endpointRoutes = 'http://localhost:8080/routes';
 
 function init() {
-    const map = L.map('map', {attributionControl: false, center: [53.773056, 20.476111], zoom: 14});
+    const map = L.map('map', {attributionControl: false, center: [52.2553333, 20.9038436], zoom: 14});
 
     L.tileLayer('https://api.mapbox.com/styles/v1/amwolff/cjnynkofj1jxf2ro9v4123t0v/tiles/256/{z}/{x}/{y}?access_token={t}', {
         t: 'pk.eyJ1IjoiYW13b2xmZiIsImEiOiJjamtndGVqMnUwbjV2M3BueDRxNWtqODQ5In0.f6Sd2mM-5ozz45F4ZxlU8Q',
