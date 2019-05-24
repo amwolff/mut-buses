@@ -12,8 +12,8 @@ public class Vehicle {
     @Expose
     @SerializedName(value = "longitude", alternate = "Lon")
     private final float lon;
-    @Expose(serialize = false)
-    @SerializedName("Time")
+    @Expose
+    @SerializedName(value = "time", alternate = "Time")
     private final Date time;
     @Expose
     @SerializedName(value = "route", alternate = "Lines")
