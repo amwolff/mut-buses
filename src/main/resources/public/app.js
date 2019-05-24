@@ -47,9 +47,9 @@ class InternalVehicle {
 
     static getIconBodyColor(route) {
         if (route < 100) {
-            return 'rgba(227, 30, 30, 0.9)';
+            return 'rgba(233, 0, 36, 0.9)';
         } else if (route >= 100) {
-            return 'rgba(0, 157, 210, 0.9)';
+            return 'rgba(136, 0, 124, 0.9)';
         }
         return 'rgba(0, 0, 0, 0.9)';
     };
