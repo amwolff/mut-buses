@@ -10,20 +10,21 @@ public class Server {
     private final Route healthEndpoint;
     private final Route routesEndpoint;
     private final Route vehiclesEndpoint;
-    private final Route uiEndpoint;
     private final Gson gson;
 
-    public Server(Route healthEndpoint, Route routesEndpoint, Route vehiclesEndpoint, Route uiEndpoint) {
+    public Server(Route healthEndpoint, Route routesEndpoint, Route vehiclesEndpoint) {
         this.healthEndpoint = healthEndpoint;
         this.routesEndpoint = routesEndpoint;
         this.vehiclesEndpoint = vehiclesEndpoint;
-        this.uiEndpoint = uiEndpoint;
         gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     }
 
     public void initListenAndServe() {
         port(8080);
-        get("/", uiEndpoint);
+
+        staticFiles.location("/public");
+        staticFiles.expireTime(Long.MAX_VALUE);
+
         get("/healthz", healthEndpoint);
         get("/routes", routesEndpoint, gson::toJson);
         get("/vehicles/all", vehiclesEndpoint, gson::toJson);

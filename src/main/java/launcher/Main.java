@@ -14,37 +14,21 @@ import static api.Handlers.*;
 public class Main { // it's only a sketch
     public static void main(String[] args) {
         final DefaultAPIClient defaultAPIClient = new DefaultAPIClient("17726468-47b2-466b-8ec1-4c99276dc9fa");
-        final ImmutableInMemoryStore db = new ImmutableInMemoryStore();
-        final List<String> qLns = new ArrayList<>();
+        final ImmutableInMemoryStore store = new ImmutableInMemoryStore();
+        final List<String> queriedLines = new ArrayList<>();
+        queriedLines.add("523");
+        queriedLines.add("220");
+        queriedLines.add("122");
 
-        qLns.add("N01");
-        qLns.add("N02");
-        qLns.add("N03");
-        qLns.add("N11");
-        qLns.add("N12");
-        qLns.add("N13");
-        qLns.add("N14");
-        qLns.add("N16");
-        qLns.add("N21");
-        qLns.add("N22");
-        qLns.add("N24");
-        qLns.add("N25");
-        qLns.add("N31");
-
-        final Thread fetcherThread = new Thread(new SimpleFetcher(defaultAPIClient, db, qLns));
+        final Thread fetcherThread = new Thread(new SimpleFetcher(defaultAPIClient, store, queriedLines));
         fetcherThread.start();
 
-        final Server srv = new Server(
-                getHealthHandler(),
-                getRoutesHandler(qLns),
-                getVehiclesAllHandler(db),
-                getUIHandler());
-
+        final Server srv = new Server(getHealthHandler(), getRoutesHandler(queriedLines), getVehiclesAllHandler(store));
         srv.initListenAndServe();
 
         Signal.handle(new Signal("INT"), signal -> {
-            srv.shutdown();
             fetcherThread.interrupt();
+            srv.shutdown();
         });
 
         try {
