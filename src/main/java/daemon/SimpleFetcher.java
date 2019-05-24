@@ -19,7 +19,7 @@ public final class SimpleFetcher implements Fetcher, Runnable {
         this.queriedLines = queriedLines;
     }
 
-    public static long calculatePartialTimeDifference(List<Vehicle> vehicleList) {
+    private static long calculatePartialTimeDifference(List<Vehicle> vehicleList) {
         final Date now = new Date();
         long gpsTimeDiffTotal = 0;
         long eligibleVehicles = 0;
@@ -36,7 +36,7 @@ public final class SimpleFetcher implements Fetcher, Runnable {
         return 0;
     }
 
-    public static long calculateTotalDelay(long PartialTotal, int queriedLinesNumber) {
+    private static long calculateTotalDelay(long PartialTotal, int queriedLinesNumber) {
         return callEveryMs - Math.floorDiv(PartialTotal, (long) queriedLinesNumber);
     }
 
@@ -44,10 +44,10 @@ public final class SimpleFetcher implements Fetcher, Runnable {
     // lines periodically. It fetches the data, inserts it into the database
     // (store) and waits calculated interval. Interval is calculated as follows:
     //  1. For each Vehicle:
-    //      1.1 Calculate difference between now and the GPS time
-    //      1.2 Store the difference
-    //  2. Divide the sum of differences by the number of fetched of Vehicles
-    //  3. Sleep time equals GPS Refresh Duration minus the divided sum
+    //      1.1 Calculate difference between current and the GPS time.
+    //      1.2 Store the difference.
+    //  2. Divide the sum of differences by the number of fetched of Vehicles.
+    //  3. Sleep time equals GPS Refresh Duration minus the divided sum.
     @Override
     public void run() { // TODO: improve logging
         while (true) {
@@ -61,11 +61,11 @@ public final class SimpleFetcher implements Fetcher, Runnable {
                     e.printStackTrace();
                 }
 
-                if (collectedVehicles != null) {
+                if (collectedVehicles != null && !collectedVehicles.isEmpty()) {
                     partialSleepDuration += calculatePartialTimeDifference(collectedVehicles);
                     store.insert(collectedVehicles);
                 } else {
-                    System.out.println("collectedVehicles is null");
+                    System.out.println("collectedVehicles is null or zero-length");
                 }
             }
 
@@ -75,6 +75,7 @@ public final class SimpleFetcher implements Fetcher, Runnable {
                 Thread.sleep(totalSleepDuration);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                return;
             }
         }
     }

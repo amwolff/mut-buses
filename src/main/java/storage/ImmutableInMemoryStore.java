@@ -12,7 +12,7 @@ public final class ImmutableInMemoryStore implements VehicleStore {
     private final Map<String, CopyOnWriteArrayList<Vehicle>> inMemDb = new ConcurrentHashMap<>();
 
     @Override
-    public void insert(Vehicle vehicle) { // shouldn't be used really
+    public void insert(Vehicle vehicle) {
         final CopyOnWriteArrayList<Vehicle> replacement = new CopyOnWriteArrayList<>();
         replacement.add(vehicle);
         inMemDb.put(vehicle.getLines(), replacement);
