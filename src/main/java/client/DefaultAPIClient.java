@@ -13,18 +13,21 @@ import java.util.List;
 import java.util.Map;
 
 public final class DefaultAPIClient implements APIClient {
-    private final String apiResourceID = "f2e5503e-927d-4ad3-9500-4ab9e55deb59";
-    private final Map<String, String> defaultParams = new HashMap<>();
-    private final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    private final String apiResourceID;
+    private final Map<String, String> defaultParams;
+    private final Gson gson;
 
     public DefaultAPIClient(String apiKey) {
+        apiResourceID = "f2e5503e-927d-4ad3-9500-4ab9e55deb59";
+        defaultParams = new HashMap<>();
         defaultParams.put("resource_id", apiResourceID);
         defaultParams.put("apikey", apiKey);
+        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").excludeFieldsWithoutExposeAnnotation().create();
     }
 
     @Override
     public List<Vehicle> getVehicles(Integer type, String line, Integer brigade) throws IOException {
-        Map<String, String> params = new HashMap<>(defaultParams);
+        final Map<String, String> params = new HashMap<>(defaultParams);
         params.put("type", type.toString());
         if (line != null) {
             params.put("line", line);
@@ -34,7 +37,7 @@ public final class DefaultAPIClient implements APIClient {
         }
 
         try (InputStream inputStream = APIClient.downloadData(params)) {
-            EndpointResult endpointResult = gson.fromJson(
+            final EndpointResult endpointResult = gson.fromJson(
                     new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)), EndpointResult.class);
 
             return endpointResult.getResult();
