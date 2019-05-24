@@ -14,10 +14,6 @@ public final class Handlers {
         return (request, response) -> "OK";
     }
 
-    public static Route getUIHandler() {
-        return (request, response) -> "Implement me!";
-    }
-
     public static Route getRoutesHandler(List<String> availableRoutes) {
         final List<InternalRoute> routeList = new ArrayList<>();
         availableRoutes.forEach(r -> {
