@@ -163,7 +163,7 @@ function insertOnMap(rawVehicles) {
     });
 }
 
-const endpointVehicles = 'http://localhost:8080/vehicles/all';
+const endpointVehicles = 'http://localhost:8080/api/vehicles/all';
 
 function refresh() {
     fetch(endpointVehicles)
@@ -350,7 +350,7 @@ function addDummyLayerGroup(map, ctx) {
     });
 }
 
-const endpointRoutes = 'http://localhost:8080/routes';
+const endpointRoutes = 'http://localhost:8080/api/routes';
 
 function init() {
     const map = L.map('map', {attributionControl: false, center: [52.2553333, 20.9038436], zoom: 14});

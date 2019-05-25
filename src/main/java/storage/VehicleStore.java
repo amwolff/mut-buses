@@ -9,6 +9,8 @@ public interface VehicleStore {
 
     void insert(List<Vehicle> vehicles);
 
+    void clear(String line);
+
     List<Vehicle> retrieveAll();
 
     List<Vehicle> retrieve(String line);

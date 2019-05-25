@@ -22,6 +22,11 @@ public final class InMemoryVehicleStore implements VehicleStore { // TODO: this 
     }
 
     @Override
+    public void clear(String line) {
+        // Implement me!
+    }
+
+    @Override
     public List<Vehicle> retrieveAll() {
         return new ArrayList<>(inMemDb.values());
     }
