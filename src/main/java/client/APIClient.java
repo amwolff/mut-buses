@@ -22,11 +22,11 @@ public interface APIClient {
 
     static InputStream downloadData(Map<String, String> requestParameters) throws IOException {
         String targetURL = baseURL;
-        for (Map.Entry<String, String> entry : requestParameters.entrySet()) {
+        for (final Map.Entry<String, String> entry : requestParameters.entrySet()) {
             targetURL = appendParameter(targetURL, entry.getKey(), entry.getValue());
         }
 
-        HttpsURLConnection connection = (HttpsURLConnection) new URL(targetURL).openConnection();
+        final HttpsURLConnection connection = (HttpsURLConnection) new URL(targetURL).openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Cache-Control", "no-cache");
 

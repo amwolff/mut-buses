@@ -1,7 +1,7 @@
 package daemon;
 
 public interface Fetcher {
-    int callEveryMs = 10000;
+    int callEveryMs = 11000;
 
     void run();
 }

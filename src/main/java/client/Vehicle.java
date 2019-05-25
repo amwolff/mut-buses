@@ -1,31 +1,41 @@
 package client;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
 public class Vehicle {
-    @SerializedName("Lat")
+    @Expose
+    @SerializedName(value = "latitude", alternate = "Lat")
     private final float lat;
-    @SerializedName("Lon")
+    @Expose
+    @SerializedName(value = "longitude", alternate = "Lon")
     private final float lon;
-    @SerializedName("Time")
+    @Expose
+    @SerializedName(value = "time", alternate = "Time")
     private final Date time;
-    @SerializedName("Lines")
+    @Expose
+    @SerializedName(value = "route", alternate = "Lines")
     private final String lines;
-    @SerializedName("Brigade")
+    @Expose
+    @SerializedName(value = "trip_id", alternate = "Brigade")
     private final int brigade;
+    @Expose(deserialize = false)
+    @SerializedName("azimuth")
+    private final float azimuth;
 
-    public Vehicle(float lat, float lon, Date time, String lines, int brigade) {
+    public Vehicle(float lat, float lon, Date time, String lines, int brigade, float azimuth) {
         this.lat = lat;
         this.lon = lon;
+        this.time = time;
         this.lines = lines;
         this.brigade = brigade;
-        this.time = time;
+        this.azimuth = azimuth;
     }
 
     public Vehicle(Vehicle v) {
-        this(v.lat, v.lon, v.time, v.lines, v.brigade);
+        this(v.lat, v.lon, v.time, v.lines, v.brigade, v.azimuth);
     }
 
     public float getLat() {
@@ -48,4 +58,7 @@ public class Vehicle {
         return brigade;
     }
 
+    public float getAzimuth() {
+        return azimuth;
+    }
 }

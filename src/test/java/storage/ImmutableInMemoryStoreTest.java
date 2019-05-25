@@ -66,9 +66,9 @@ class ImmutableInMemoryStoreTest {
     @BeforeEach
     private void initVehicles() {
         Date date = new Time(4);
-        Vehicle firstVeh = new Vehicle(0, 0, date, "220", 1);
-        Vehicle secondVeh = new Vehicle(1, 1, date, "220", 2);
-        Vehicle thirdVeh = new Vehicle(2, 2, date, "122", 1);
+        Vehicle firstVeh = new Vehicle(0f, 0f, date, "220", 1, 0.1f);
+        Vehicle secondVeh = new Vehicle(1f, 1f, date, "220", 2, 0.1f);
+        Vehicle thirdVeh = new Vehicle(2f, 2f, date, "122", 1, 0.1f);
         firstLineVehicles = new CopyOnWriteArrayList<>();
         secLineVehicles = new CopyOnWriteArrayList<>();
         firstLineVehicles.add(firstVeh);
