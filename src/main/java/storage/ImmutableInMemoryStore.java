@@ -24,6 +24,11 @@ public final class ImmutableInMemoryStore implements VehicleStore {
     }
 
     @Override
+    public void clear(String line) {
+        inMemDb.getOrDefault(line, new CopyOnWriteArrayList<>()).clear();
+    }
+
+    @Override
     public List<Vehicle> retrieveAll() {
         final List<Vehicle> ret = new ArrayList<>();
         inMemDb.values().forEach(ret::addAll);
@@ -32,7 +37,7 @@ public final class ImmutableInMemoryStore implements VehicleStore {
 
     @Override
     public List<Vehicle> retrieve(String line) {
-        return inMemDb.get(line);
+        return new ArrayList<>(inMemDb.get(line));
     }
 
     @Override

@@ -16,20 +16,33 @@ public class Server {
         this.healthEndpoint = healthEndpoint;
         this.routesEndpoint = routesEndpoint;
         this.vehiclesEndpoint = vehiclesEndpoint;
-        gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        gson = new GsonBuilder().setDateFormat("MM-dd HH:mm:ss").excludeFieldsWithoutExposeAnnotation().create();
     }
 
     public void initListenAndServe() {
         port(8080);
 
         staticFiles.location("/public");
-        staticFiles.expireTime(Long.MAX_VALUE);
+        staticFiles.expireTime(31536000);
+
+        notFound((request, response) -> {
+            response.redirect("/");
+            return null;
+        });
 
         get("/healthz", healthEndpoint);
-        get("/routes", routesEndpoint, gson::toJson);
-        get("/vehicles/all", vehiclesEndpoint, gson::toJson);
 
-        // TODO: add handlers for specific lines' vehicles
+        path("/api", () -> {
+            get("/routes", routesEndpoint, gson::toJson);
+            path("/vehicles", () -> {
+                get("/all", vehiclesEndpoint, gson::toJson);
+                // TODO: add handlers for specific lines' vehicles
+            });
+            after("/*", (request, response) -> {
+                response.header("Cache-Control", "no-cache, no-store, must-revalidate");
+                response.header("Content-Type", "application/json");
+            });
+        });
 
         after((request, response) -> {
             response.header("Content-Encoding", "gzip");

@@ -5,6 +5,7 @@ import storage.VehicleStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public final class Handlers {
     private Handlers() {
@@ -14,11 +15,9 @@ public final class Handlers {
         return (request, response) -> "OK";
     }
 
-    public static Route getRoutesHandler(List<String> availableRoutes) {
+    public static Route getRoutesHandler(Map<String, Integer> availableRoutes) {
         final List<InternalRoute> routeList = new ArrayList<>();
-        availableRoutes.forEach(r -> {
-            routeList.add(new InternalRoute(r));
-        });
+        availableRoutes.forEach((r, t) -> routeList.add(new InternalRoute(r)));
 
         return (request, response) -> routeList;
     }

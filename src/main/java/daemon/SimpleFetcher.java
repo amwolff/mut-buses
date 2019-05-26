@@ -8,14 +8,15 @@ import storage.VehicleStore;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public final class SimpleFetcher implements Fetcher, Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleFetcher.class);
     private final APIClient client;
     private final VehicleStore store;
-    private final List<String> queriedLines;
+    private final Map<String, Integer> queriedLines;
 
-    public SimpleFetcher(APIClient client, VehicleStore store, List<String> queriedLines) {
+    public SimpleFetcher(APIClient client, VehicleStore store, Map<String, Integer> queriedLines) {
         this.client = client;
         this.store = store;
         this.queriedLines = queriedLines;
@@ -54,27 +55,27 @@ public final class SimpleFetcher implements Fetcher, Runnable {
     public void run() {
         while (true) {
             long partialTimeDifferenceSum = 0;
-            for (final String q : queriedLines) {
-                List<Vehicle> collectedVehicles = null;
+            for (final Map.Entry<String, Integer> q : queriedLines.entrySet()) {
+                List<Vehicle> collectedVehicles;
 
                 try {
-                    collectedVehicles = client.getVehicles(1, q);
+                    collectedVehicles = client.getVehicles(q.getValue(), q.getKey());
                 } catch (Throwable t) {
-                    LOG.error("{}: client.getVehicles", q, t);
+                    LOG.error("{}: client.getVehicles", q.getKey(), t);
                     continue;
                 }
 
                 if (collectedVehicles != null && !collectedVehicles.isEmpty()) {
                     final long partialTimeDifference = calculatePartialTimeDifference(collectedVehicles);
-                    LOG.debug("{}: partialTimeDifference is {}", q, partialTimeDifference);
+                    LOG.debug("{}: partialTimeDifference is {}", q.getKey(), partialTimeDifference);
 
                     partialTimeDifferenceSum += partialTimeDifference;
 
                     store.insert(collectedVehicles);
-                    LOG.info("{}: inserted {} item(s) into the database", q, collectedVehicles.size());
+                    LOG.info("{}: inserted {} item(s) into the database", q.getKey(), collectedVehicles.size());
                 } else {
-                    LOG.warn("{}: collectedVehicles is null or zero-length", q);
-                    // TODO: clear data for {q} key in the database
+                    LOG.warn("{}: collectedVehicles is null or zero-length", q.getKey());
+                    store.clear(q.getKey());
                 }
             }
 
