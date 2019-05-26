@@ -23,9 +23,9 @@ public class Vehicle {
     private final int brigade;
     @Expose(deserialize = false)
     @SerializedName("azimuth")
-    private final float azimuth;
+    private final double azimuth;
 
-    public Vehicle(float lat, float lon, Date time, String lines, int brigade, float azimuth) {
+    public Vehicle(float lat, float lon, Date time, String lines, int brigade, double azimuth) {
         this.lat = lat;
         this.lon = lon;
         this.time = time;
@@ -36,6 +36,10 @@ public class Vehicle {
 
     public Vehicle(Vehicle v) {
         this(v.lat, v.lon, v.time, v.lines, v.brigade, v.azimuth);
+    }
+
+    public Vehicle(Vehicle v, double azimuth) {
+        this(v.lat, v.lon, v.time, v.lines, v.brigade, azimuth);
     }
 
     public float getLat() {
@@ -58,7 +62,7 @@ public class Vehicle {
         return brigade;
     }
 
-    public float getAzimuth() {
+    public double getAzimuth() {
         return azimuth;
     }
 }

@@ -31,6 +31,7 @@ public class Server {
         });
 
         get("/healthz", healthEndpoint);
+        get("/favicon.ico", (request, response) -> "");
 
         path("/api", () -> {
             get("/routes", routesEndpoint, gson::toJson);

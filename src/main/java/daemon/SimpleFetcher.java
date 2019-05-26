@@ -56,7 +56,7 @@ public final class SimpleFetcher implements Fetcher, Runnable {
         while (true) {
             long partialTimeDifferenceSum = 0;
             for (final Map.Entry<String, Integer> q : queriedLines.entrySet()) {
-                List<Vehicle> collectedVehicles;
+                final List<Vehicle> collectedVehicles;
 
                 try {
                     collectedVehicles = client.getVehicles(q.getValue(), q.getKey());
