@@ -43,7 +43,7 @@ public final class InMemoryVehicleStore implements VehicleStore { // TODO: this 
     }
 
     @Override
-    public Vehicle retrieve(String line, Integer brigade) {
+    public Vehicle retrieve(String line, String brigade) {
         return inMemDb.get(line + brigade);
     }
 }

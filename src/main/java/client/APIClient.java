@@ -33,7 +33,7 @@ public interface APIClient {
         return connection.getInputStream();
     }
 
-    List<Vehicle> getVehicles(Integer type, String line, Integer brigade) throws IOException;
+    List<Vehicle> getVehicles(Integer type, String line, String brigade) throws IOException;
 
     List<Vehicle> getVehicles(Integer type, String line) throws IOException;
 

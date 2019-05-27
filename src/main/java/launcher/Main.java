@@ -15,12 +15,13 @@ import static api.Handlers.*;
 
 public class Main {
     private static final DefaultAPIClient defaultAPIClient = new DefaultAPIClient("17726468-47b2-466b-8ec1-4c99276dc9fa");
-    private static final ImmutableStoreWithAzimuth store = new ImmutableStoreWithAzimuth();
     private static final Map<String, Integer> queriedLines = new HashMap<>();
     private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
         basicInit();
+
+        final ImmutableStoreWithAzimuth store = new ImmutableStoreWithAzimuth(queriedLines);
 
         final Thread fetcherThread = new Thread(new SimpleFetcher(defaultAPIClient, store, queriedLines));
         fetcherThread.start();

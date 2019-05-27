@@ -72,7 +72,7 @@ public final class SimpleFetcher implements Fetcher, Runnable {
                     partialTimeDifferenceSum += partialTimeDifference;
 
                     store.insert(collectedVehicles);
-                    LOG.info("{}: inserted {} item(s) into the database", q.getKey(), collectedVehicles.size());
+                    LOG.info("{}: inserted approx. {} item(s) into the database", q.getKey(), collectedVehicles.size());
                 } else {
                     LOG.warn("{}: collectedVehicles is null or zero-length", q.getKey());
                     store.clear(q.getKey());

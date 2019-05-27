@@ -20,12 +20,12 @@ public class Vehicle {
     private final String lines;
     @Expose
     @SerializedName(value = "trip_id", alternate = "Brigade")
-    private final int brigade;
+    private final String brigade;
     @Expose(deserialize = false)
     @SerializedName("azimuth")
     private final double azimuth;
 
-    public Vehicle(float lat, float lon, Date time, String lines, int brigade, double azimuth) {
+    public Vehicle(float lat, float lon, Date time, String lines, String brigade, double azimuth) {
         this.lat = lat;
         this.lon = lon;
         this.time = time;
@@ -58,7 +58,7 @@ public class Vehicle {
         return lines;
     }
 
-    public int getBrigade() {
+    public String getBrigade() {
         return brigade;
     }
 

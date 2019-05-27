@@ -26,14 +26,14 @@ public final class DefaultAPIClient implements APIClient {
     }
 
     @Override
-    public List<Vehicle> getVehicles(Integer type, String line, Integer brigade) throws IOException {
+    public List<Vehicle> getVehicles(Integer type, String line, String brigade) throws IOException {
         final Map<String, String> params = new HashMap<>(defaultParams);
         params.put("type", type.toString());
         if (line != null) {
             params.put("line", line);
         }
         if (brigade != null) {
-            params.put("brigade", brigade.toString());
+            params.put("brigade", brigade);
         }
 
         try (InputStream inputStream = APIClient.downloadData(params)) {

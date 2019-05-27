@@ -15,5 +15,5 @@ public interface VehicleStore {
 
     List<Vehicle> retrieve(String line);
 
-    Vehicle retrieve(String line, Integer brigade);
+    Vehicle retrieve(String line, String brigade);
 }

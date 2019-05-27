@@ -8,8 +8,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public final class ImmutableStore implements VehicleStore {
+import static java.lang.Math.*;
+
+public final class ImmutableStoreWithAzimuth3 implements VehicleStore {
     private final Map<String, CopyOnWriteArrayList<Vehicle>> backend = new ConcurrentHashMap<>();
+
+
 
     @Override
     public void insert(Vehicle vehicle) {
@@ -20,7 +24,22 @@ public final class ImmutableStore implements VehicleStore {
 
     @Override
     public void insert(List<Vehicle> vehicles) {
-        backend.put(vehicles.get(0).getLines(), new CopyOnWriteArrayList<>(vehicles));
+//        final List<Vehicle> remaining = new ArrayList<>(vehicles);
+//        final String getPutKey = remaining.get(0).getLines();
+//        final List<Vehicle> previousInsert = backend.getOrDefault(getPutKey, new CopyOnWriteArrayList<>());
+//        final List<Vehicle> withAzimuth = new ArrayList<>();
+//        vehicles.forEach(v -> previousInsert.forEach(p -> {
+//            if (shallowCompareVehicles(v, p)) {
+//                if (!(p.getLat() == v.getLat() && p.getLon() == v.getLon())) {
+//                    withAzimuth.add(new Vehicle(v, calculateAzimuth(p.getLat(), p.getLon(), v.getLat(), v.getLon())));
+//                } else {
+//                    withAzimuth.add(new Vehicle(v, p.getAzimuth()));
+//                }
+//                remaining.remove(v);
+//            }
+//        }));
+//        withAzimuth.addAll(remaining); // add the rest from the vehicle list
+//        backend.put(getPutKey, new CopyOnWriteArrayList<>(withAzimuth));
     }
 
     @Override
