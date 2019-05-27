@@ -33,7 +33,7 @@ const iconTemplate =
     'Sorry, your browser does not support inline SVG.\n' +
     '</svg>';
 
-const popupTemplate = '<b>Line number {route}</b><br>Trip ID: {trip_id}<br>GPS time: {time}';
+const popupTemplate = '<b>{route}</b><br>Trip ID: {trip_id}<br>GPS time: {time}';
 
 class InternalVehicle {
     constructor(rawVehicle) {

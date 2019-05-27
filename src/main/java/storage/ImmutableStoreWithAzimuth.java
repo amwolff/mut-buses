@@ -29,9 +29,9 @@ public class ImmutableStoreWithAzimuth implements VehicleStore {
     static List<Vehicle> removeDuplicates(List<Vehicle> duplicated) {
         final List<Vehicle> deduplicated = new ArrayList<>();
         outerLoop:
-        for (Vehicle v1 : duplicated) {
+        for (final Vehicle v1 : duplicated) {
             for (int i = 0; i < deduplicated.size(); i++) {
-                Vehicle v2 = deduplicated.get(i);
+                final Vehicle v2 = deduplicated.get(i);
                 if (shallowCompareVehicles(v1, v2)) {
                     if (v1.getTime().getTime() > v2.getTime().getTime()) {
                         deduplicated.set(i, v1);
@@ -90,7 +90,7 @@ public class ImmutableStoreWithAzimuth implements VehicleStore {
 
     @Override
     public void clear(String line) {
-        List<Vehicle> vehicles = backend.get(line);
+        final List<Vehicle> vehicles = backend.get(line);
         arrayMtx.writeLock().lock();
         vehicles.clear();
         arrayMtx.writeLock().unlock();
@@ -99,11 +99,9 @@ public class ImmutableStoreWithAzimuth implements VehicleStore {
     @Override
     public List<Vehicle> retrieveAll() {
         final List<Vehicle> ret = new ArrayList<>();
-        for (List<Vehicle> vehicles : backend.values()) {
-            arrayMtx.readLock().lock();
-            ret.addAll(vehicles);
-            arrayMtx.readLock().unlock();
-        }
+        arrayMtx.readLock().lock();
+        backend.values().forEach(ret::addAll);
+        arrayMtx.readLock().unlock();
         return ret;
     }
 
