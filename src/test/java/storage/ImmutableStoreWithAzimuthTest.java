@@ -24,11 +24,23 @@ class ImmutableStoreWithAzimuthTest {
         duplicates.add(new Vehicle(0, 0, new Date("January 1, 1970"), "1", "2", 0));
         duplicates.add(new Vehicle(0, 0, new Date("January 1, 1970"), "1", "3", 0));
 
-        final List<Vehicle> deduplicated = new ArrayList<>(duplicates);
-        deduplicated.remove(toDel0);
-        deduplicated.remove(toDel1);
+        final List<Vehicle> dedupeControlSample = new ArrayList<>(duplicates);
+        dedupeControlSample.remove(toDel0);
+        dedupeControlSample.remove(toDel1);
 
-        assertEquals(deduplicated, ImmutableStoreWithAzimuth.removeDuplicates(duplicates));
+        assertEquals(dedupeControlSample, ImmutableStoreWithAzimuth.removeDuplicates(dedupeControlSample));
+
+        assertEquals(dedupeControlSample, ImmutableStoreWithAzimuth.removeDuplicates(duplicates));
+
+        assertEquals(dedupeControlSample,
+                ImmutableStoreWithAzimuth.removeDuplicates(
+                        ImmutableStoreWithAzimuth.removeDuplicates(
+                                ImmutableStoreWithAzimuth.removeDuplicates(
+                                        ImmutableStoreWithAzimuth.removeDuplicates(
+                                                ImmutableStoreWithAzimuth.removeDuplicates(duplicates))))));
+
+        final List<Vehicle> empty = new ArrayList<>();
+        assertEquals(empty, ImmutableStoreWithAzimuth.removeDuplicates(empty));
     }
 
     @Test

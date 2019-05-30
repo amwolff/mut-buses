@@ -24,8 +24,8 @@ public final class ImmutableStore implements VehicleStore {
     }
 
     @Override
-    public void clear(String line) {
-        backend.getOrDefault(line, new CopyOnWriteArrayList<>()).clear();
+    public void clear(String route) {
+        backend.getOrDefault(route, new CopyOnWriteArrayList<>()).clear();
     }
 
     @Override
@@ -36,15 +36,15 @@ public final class ImmutableStore implements VehicleStore {
     }
 
     @Override
-    public List<Vehicle> retrieve(String line) {
-        return new ArrayList<>(backend.get(line));
+    public List<Vehicle> retrieve(String route) {
+        return new ArrayList<>(backend.get(route));
     }
 
     @Override
-    public Vehicle retrieve(String line, String brigade) {
-        final List<Vehicle> vehicles = backend.get(line);
+    public Vehicle retrieve(String route, String tripID) {
+        final List<Vehicle> vehicles = backend.get(route);
         for (final Vehicle vehicle : vehicles) {
-            if (vehicle.getBrigade().equals(brigade)) {
+            if (vehicle.getBrigade().equals(tripID)) {
                 return vehicle;
             }
         }

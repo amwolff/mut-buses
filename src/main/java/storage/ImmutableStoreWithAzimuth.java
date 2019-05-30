@@ -15,9 +15,9 @@ public class ImmutableStoreWithAzimuth implements VehicleStore {
     private final Map<String, List<Vehicle>> backend;
     private final ReadWriteLock arrayMtx;
 
-    public ImmutableStoreWithAzimuth(Map<String, Integer> queriedLines) {
+    public ImmutableStoreWithAzimuth(Map<String, Integer> queriedRoutes) {
         backend = new HashMap<>();
-        queriedLines.forEach((k, v) -> backend.put(k, new ArrayList<>()));
+        queriedRoutes.forEach((k, v) -> backend.put(k, new ArrayList<>()));
 
         arrayMtx = new ReentrantReadWriteLock();
     }
@@ -55,7 +55,7 @@ public class ImmutableStoreWithAzimuth implements VehicleStore {
 
     @Override
     public void insert(Vehicle vehicle) {
-        // implement me!
+        // throw new ExecutionControl.NotImplementedException("implement me!");
     }
 
     @Override
@@ -89,8 +89,8 @@ public class ImmutableStoreWithAzimuth implements VehicleStore {
     }
 
     @Override
-    public void clear(String line) {
-        final List<Vehicle> vehicles = backend.get(line);
+    public void clear(String route) {
+        final List<Vehicle> vehicles = backend.get(route);
         arrayMtx.writeLock().lock();
         vehicles.clear();
         arrayMtx.writeLock().unlock();
@@ -106,14 +106,14 @@ public class ImmutableStoreWithAzimuth implements VehicleStore {
     }
 
     @Override
-    public List<Vehicle> retrieve(String line) {
-        // implement me!
+    public List<Vehicle> retrieve(String route) {
+        // throw new ExecutionControl.NotImplementedException("implement me!");
         return null;
     }
 
     @Override
-    public Vehicle retrieve(String line, String brigade) {
-        // implement me!
+    public Vehicle retrieve(String route, String tripID) {
+        // throw new ExecutionControl.NotImplementedException("implement me!");
         return null;
     }
 }

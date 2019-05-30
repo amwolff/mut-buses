@@ -15,9 +15,9 @@ public final class Handlers {
         return (request, response) -> "OK";
     }
 
-    public static Route getRoutesHandler(Map<String, Integer> availableRoutes) {
+    public static Route getRoutesHandler(Map<String, Integer> queriedRoutes) {
         final List<InternalRoute> routeList = new ArrayList<>();
-        availableRoutes.forEach((r, t) -> routeList.add(new InternalRoute(r)));
+        queriedRoutes.forEach((r, t) -> routeList.add(new InternalRoute(r)));
 
         return (request, response) -> routeList;
     }
