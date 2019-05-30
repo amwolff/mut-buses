@@ -47,10 +47,11 @@ public class ImmutableStoreWithAzimuth implements VehicleStore {
     static double calculateAzimuth(double lat1, double lon1, double lat2, double lon2) {
         // Δλ = λ₂ - λ₁
         // θ = atan2 [(sin Δλ ⋅ cos φ₂), (cos φ₁ ⋅ sin φ₂ − sin φ₁ ⋅ cos φ₂ ⋅ cos Δλ)]
-        final double d = toRadians(lon2 - lon1);
+        final double delta = toRadians(lon2 - lon1);
         final double radLat2 = toRadians(lat2);
         final double radLat1 = toRadians(lat1);
-        return toDegrees(atan2(sin(d) * cos(radLat2), (cos(radLat1) * sin(radLat2)) - (sin(radLat1) * cos(radLat2) * cos(d))));
+        return toDegrees(atan2(
+                sin(delta) * cos(radLat2), (cos(radLat1) * sin(radLat2)) - (sin(radLat1) * cos(radLat2) * cos(delta))));
     }
 
     @Override
