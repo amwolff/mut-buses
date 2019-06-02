@@ -22,7 +22,7 @@ public final class InMemoryVehicleStore implements VehicleStore { // TODO: this 
     }
 
     @Override
-    public void clear(String line) {
+    public void clear(String route) {
         // Implement me!
     }
 
@@ -32,10 +32,10 @@ public final class InMemoryVehicleStore implements VehicleStore { // TODO: this 
     }
 
     @Override
-    public List<Vehicle> retrieve(String line) {
+    public List<Vehicle> retrieve(String route) {
         final List<Vehicle> ret = new LinkedList<>();
         inMemDb.forEach((hash, vehicle) -> {
-            if (hash.startsWith(line)) {
+            if (hash.startsWith(route)) {
                 ret.add(vehicle);
             }
         });
@@ -43,7 +43,7 @@ public final class InMemoryVehicleStore implements VehicleStore { // TODO: this 
     }
 
     @Override
-    public Vehicle retrieve(String line, Integer brigade) {
-        return inMemDb.get(line + brigade);
+    public Vehicle retrieve(String route, String tripID) {
+        return inMemDb.get(route + tripID);
     }
 }

@@ -14,12 +14,12 @@ public final class SimpleFetcher implements Fetcher, Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleFetcher.class);
     private final APIClient client;
     private final VehicleStore store;
-    private final Map<String, Integer> queriedLines;
+    private final Map<String, Integer> queriedRoutes;
 
-    public SimpleFetcher(APIClient client, VehicleStore store, Map<String, Integer> queriedLines) {
+    public SimpleFetcher(APIClient client, VehicleStore store, Map<String, Integer> queriedRoutes) {
         this.client = client;
         this.store = store;
-        this.queriedLines = queriedLines;
+        this.queriedRoutes = queriedRoutes;
     }
 
     private static long calculatePartialTimeDifference(List<Vehicle> vehicleList) {
@@ -39,12 +39,12 @@ public final class SimpleFetcher implements Fetcher, Runnable {
         return 0;
     }
 
-    private static long calculateTotalDelay(long PartialTotal, int queriedLinesNumber) {
-        return callEveryMs - Math.floorDiv(PartialTotal, (long) queriedLinesNumber);
+    private static long calculateTotalDelay(long PartialTotal, int queriedRoutesSize) {
+        return callEveryMs - Math.floorDiv(PartialTotal, (long) queriedRoutesSize);
     }
 
     // run of SimpleFetcher retrieves all available Vehicles from the queried
-    // lines periodically. It fetches the data, inserts it into the database
+    // routes periodically. It fetches the data, inserts it into the database
     // (store) and waits calculated interval. Interval is calculated as follows:
     //  1. For each Vehicle:
     //      1.1 Calculate difference between current and the GPS time.
@@ -53,10 +53,15 @@ public final class SimpleFetcher implements Fetcher, Runnable {
     //  3. Sleep time equals GPS Refresh Duration minus the divided sum.
     @Override
     public void run() {
+        if (queriedRoutes.isEmpty()) {
+            LOG.warn("Nothing to query... Exiting");
+            return;
+        }
+
         while (true) {
             long partialTimeDifferenceSum = 0;
-            for (final Map.Entry<String, Integer> q : queriedLines.entrySet()) {
-                List<Vehicle> collectedVehicles;
+            for (final Map.Entry<String, Integer> q : queriedRoutes.entrySet()) {
+                final List<Vehicle> collectedVehicles;
 
                 try {
                     collectedVehicles = client.getVehicles(q.getValue(), q.getKey());
@@ -72,14 +77,14 @@ public final class SimpleFetcher implements Fetcher, Runnable {
                     partialTimeDifferenceSum += partialTimeDifference;
 
                     store.insert(collectedVehicles);
-                    LOG.info("{}: inserted {} item(s) into the database", q.getKey(), collectedVehicles.size());
+                    LOG.info("{}: inserted approx. {} item(s) into the database", q.getKey(), collectedVehicles.size());
                 } else {
                     LOG.warn("{}: collectedVehicles is null or zero-length", q.getKey());
                     store.clear(q.getKey());
                 }
             }
 
-            final long calculatedSleepDuration = calculateTotalDelay(partialTimeDifferenceSum, queriedLines.size());
+            final long calculatedSleepDuration = calculateTotalDelay(partialTimeDifferenceSum, queriedRoutes.size());
             LOG.info("Will now wait {}ms", calculatedSleepDuration);
             try {
                 Thread.sleep(calculatedSleepDuration);

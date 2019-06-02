@@ -7,15 +7,15 @@ import spark.Route;
 import static spark.Spark.*;
 
 public class Server {
-    private final Route healthEndpoint;
-    private final Route routesEndpoint;
-    private final Route vehiclesEndpoint;
+    private final Route healthHandler;
+    private final Route routesHandler;
+    private final Route vehiclesAllHandler;
     private final Gson gson;
 
-    public Server(Route healthEndpoint, Route routesEndpoint, Route vehiclesEndpoint) {
-        this.healthEndpoint = healthEndpoint;
-        this.routesEndpoint = routesEndpoint;
-        this.vehiclesEndpoint = vehiclesEndpoint;
+    public Server(Route healthHandler, Route routesHandler, Route vehiclesAllHandler) {
+        this.healthHandler = healthHandler;
+        this.routesHandler = routesHandler;
+        this.vehiclesAllHandler = vehiclesAllHandler;
         gson = new GsonBuilder().setDateFormat("MM-dd HH:mm:ss").excludeFieldsWithoutExposeAnnotation().create();
     }
 
@@ -30,12 +30,13 @@ public class Server {
             return null;
         });
 
-        get("/healthz", healthEndpoint);
+        get("/healthz", healthHandler);
+        get("/favicon.ico", (request, response) -> "");
 
         path("/api", () -> {
-            get("/routes", routesEndpoint, gson::toJson);
+            get("/routes", routesHandler, gson::toJson);
             path("/vehicles", () -> {
-                get("/all", vehiclesEndpoint, gson::toJson);
+                get("/all", vehiclesAllHandler, gson::toJson);
                 // TODO: add handlers for specific lines' vehicles
             });
             after("/*", (request, response) -> {

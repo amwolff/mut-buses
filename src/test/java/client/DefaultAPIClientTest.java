@@ -39,7 +39,7 @@ class DefaultAPIClientTest {
             assertNotEquals(0, vehicle.getLon());
             assertNotNull(vehicle.getTime());
             assertFalse(vehicle.getLines().trim().isEmpty());
-            assertNotEquals(0, vehicle.getBrigade());
+            assertFalse(vehicle.getBrigade().trim().isEmpty());
         });
     }
 }

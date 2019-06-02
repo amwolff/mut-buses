@@ -9,11 +9,11 @@ public interface VehicleStore {
 
     void insert(List<Vehicle> vehicles);
 
-    void clear(String line);
+    void clear(String route);
 
     List<Vehicle> retrieveAll();
 
-    List<Vehicle> retrieve(String line);
+    List<Vehicle> retrieve(String route);
 
-    Vehicle retrieve(String line, Integer brigade);
+    Vehicle retrieve(String route, String tripID);
 }
