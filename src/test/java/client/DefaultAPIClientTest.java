@@ -14,10 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class DefaultAPIClientTest {
 
     private static String apiKeyForTests = "";
+    private static final String FILE_PATH = "src/test/resources/secret.txt";
 
     @BeforeEach
     void setUp() throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader("src/test/resources/secret.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
             apiKeyForTests = br.readLine();
         }
         if (apiKeyForTests.isEmpty()) {

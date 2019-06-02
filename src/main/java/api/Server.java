@@ -2,11 +2,26 @@ package api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Route;
 
 import static spark.Spark.*;
 
 public class Server {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Server.class);
+
+    private static final int PORT_VALUE = 8080;
+
+    private static final String PUBLIC_PATH = "/public";
+    private static final String HEALTHZ_PATH = "/healthz";
+    private static final String FAVICON_PATH = "/favicon.ico";
+    private static final String API_PATH = "/api";
+    private static final String ROUTES_PATH = "/routes";
+    private static final String VEHICLES_PATH = "/vehicles";
+    private static final String ALL_PATH = "/all";
+
     private final Route healthHandler;
     private final Route routesHandler;
     private final Route vehiclesAllHandler;
@@ -20,9 +35,10 @@ public class Server {
     }
 
     public void initListenAndServe() {
-        port(8080);
+        port(PORT_VALUE);
+        LOG.info("Port set to {}", PORT_VALUE);
 
-        staticFiles.location("/public");
+        staticFiles.location(PUBLIC_PATH);
         staticFiles.expireTime(31536000);
 
         notFound((request, response) -> {
@@ -30,13 +46,19 @@ public class Server {
             return null;
         });
 
-        get("/healthz", healthHandler);
-        get("/favicon.ico", (request, response) -> "");
+        get(HEALTHZ_PATH, healthHandler);
+        LOG.info("initialization of {} endopint", healthHandler);
 
-        path("/api", () -> {
-            get("/routes", routesHandler, gson::toJson);
-            path("/vehicles", () -> {
-                get("/all", vehiclesAllHandler, gson::toJson);
+        get(FAVICON_PATH, (request, response) -> "");
+
+        path(API_PATH, () -> {
+            get(ROUTES_PATH, routesHandler, gson::toJson);
+            LOG.info("initialization of {} endopint", routesHandler);
+
+            path(VEHICLES_PATH, () -> {
+                get(ALL_PATH, vehiclesAllHandler, gson::toJson);
+                LOG.info("initialization of {} endopint", vehiclesAllHandler);
+
                 // TODO: add handlers for specific lines' vehicles
             });
             after("/*", (request, response) -> {
@@ -51,6 +73,7 @@ public class Server {
     }
 
     public void shutdown() {
+        LOG.warn("server will be turned off!");
         stop();
     }
 }
