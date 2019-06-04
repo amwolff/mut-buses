@@ -10,6 +10,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * SimpleFetcher holds basic Fetcher implementation.
+ * It's designed to download large amounts of data while keeping low memory footprint of the api.um.warszawa.pl web
+ * service.
+ */
 public final class SimpleFetcher implements Fetcher, Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleFetcher.class);
     private final APIClient client;
@@ -43,14 +48,16 @@ public final class SimpleFetcher implements Fetcher, Runnable {
         return callEveryMs - Math.floorDiv(PartialTotal, (long) queriedRoutesSize);
     }
 
-    // run of SimpleFetcher retrieves all available Vehicles from the queried
-    // routes periodically. It fetches the data, inserts it into the database
-    // (store) and waits calculated interval. Interval is calculated as follows:
-    //  1. For each Vehicle:
-    //      1.1 Calculate difference between current and the GPS time.
-    //      1.2 Store the difference.
-    //  2. Divide the sum of differences by the number of fetched of Vehicles.
-    //  3. Sleep time equals GPS Refresh Duration minus the divided sum.
+    /**
+     * run of SimpleFetcher retrieves all available Vehicles from the queried
+     * routes periodically. It fetches the data, inserts it into the database
+     * (store) and waits calculated interval. Interval is calculated as follows:
+     * 1. For each Vehicle:
+     * 1.1 Calculate difference between current and the GPS time.
+     * 1.2 Store the difference.
+     * 2. Divide the sum of differences by the number of fetched of Vehicles.
+     * 3. Sleep time equals GPS Refresh Duration minus the divided sum.
+     */
     @Override
     public void run() {
         if (queriedRoutes.isEmpty()) {

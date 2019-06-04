@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Handlers provide functions for interfacing with API endpoints.
+ */
 public final class Handlers {
     private Handlers() {
     }

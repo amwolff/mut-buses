@@ -4,6 +4,9 @@ import client.Vehicle;
 
 import java.util.List;
 
+/**
+ * VehicleStore defines how fetched vehicles data can be stored and retrieved from the storage.
+ */
 public interface VehicleStore {
     void insert(Vehicle vehicle);
 

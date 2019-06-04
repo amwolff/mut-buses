@@ -6,6 +6,9 @@ import spark.Route;
 
 import static spark.Spark.*;
 
+/**
+ * Server encapsulates machinery for API part of the application.
+ */
 public class Server {
     private final Route healthHandler;
     private final Route routesHandler;
@@ -19,6 +22,9 @@ public class Server {
         gson = new GsonBuilder().setDateFormat("MM-dd HH:mm:ss").excludeFieldsWithoutExposeAnnotation().create();
     }
 
+    /**
+     * initListenAndServe registers provided handlers and starts the Server instance.
+     */
     public void initListenAndServe() {
         port(8080);
 

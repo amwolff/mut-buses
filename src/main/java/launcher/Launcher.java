@@ -13,6 +13,9 @@ import java.util.Map;
 
 import static api.Handlers.*;
 
+/**
+ * Launcher allocates required resources and starts the application.
+ */
 public class Launcher {
     private static final DefaultAPIClient defaultAPIClient = new DefaultAPIClient("17726468-47b2-466b-8ec1-4c99276dc9fa");
     private static final Map<String, Integer> queriedRoutes = new HashMap<>();
@@ -44,5 +47,6 @@ public class Launcher {
 
     private static void basicInit() {
         // TODO: move to config file
+        queriedRoutes.put("523", 1);
     }
 }
