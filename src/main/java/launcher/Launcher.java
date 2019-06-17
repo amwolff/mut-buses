@@ -48,5 +48,9 @@ public class Launcher {
     private static void basicInit() {
         // TODO: move to config file
         queriedRoutes.put("523", 1);
+        queriedRoutes.put("122", 1);
+        queriedRoutes.put("220", 1);
+        queriedRoutes.put("10", 2);
+        queriedRoutes.put("24", 2);
     }
 }
