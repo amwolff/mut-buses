@@ -7,8 +7,8 @@ The easiest way to launch the application is to checkout the repository in a
 Maven-enabled IDE (such as IntelliJ IDEA).
 
 The app is self-contained and will be available at `http://localhost:8080`
-after you run it.
+after you run it (`Launcher` class is the entrypoint).
 
 There's a possibility to [replace](http://sparkjava.com/documentation#other-web-server)
-the underlying embedded Jetty web server with something like Apache Tomcat and
-run the app on (for example) [AWS Elastic Beanstalk](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Java.html).
+the underlying embedded Jetty web server with (for example) Apache Tomcat and
+run the app on (again, for example) [AWS Elastic Beanstalk](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Java.html).
