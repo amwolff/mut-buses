@@ -11,6 +11,10 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static java.lang.Math.*;
 
+/**
+ * ImmutableStoreWithAzimuth is an in-memory VehicleStore implementation that enables calculation of the vehicle azimuth
+ * on retrieval. Records cannot be mutated and every insert on the same key overwrites previous insert.
+ */
 public class ImmutableStoreWithAzimuth implements VehicleStore {
     private final Map<String, List<Vehicle>> backend;
     private final ReadWriteLock arrayMtx;
@@ -44,9 +48,18 @@ public class ImmutableStoreWithAzimuth implements VehicleStore {
         return deduplicated;
     }
 
+    /**
+     * Azimuth is calculated using below formula:
+     * Δλ = λ₂ - λ₁
+     * θ = atan2 [(sin Δλ ⋅ cos φ₂), (cos φ₁ ⋅ sin φ₂ − sin φ₁ ⋅ cos φ₂ ⋅ cos Δλ)]
+     *
+     * @param lat1 Previous vehicle latitude.
+     * @param lon1 Previous vehicle longitude.
+     * @param lat2 New vehicle latitude.
+     * @param lon2 New vehicle longitude.
+     * @return calculated vehicle azimuth.
+     */
     static double calculateAzimuth(double lat1, double lon1, double lat2, double lon2) {
-        // Δλ = λ₂ - λ₁
-        // θ = atan2 [(sin Δλ ⋅ cos φ₂), (cos φ₁ ⋅ sin φ₂ − sin φ₁ ⋅ cos φ₂ ⋅ cos Δλ)]
         final double delta = toRadians(lon2 - lon1);
         final double radLat2 = toRadians(lat2);
         final double radLat1 = toRadians(lat1);

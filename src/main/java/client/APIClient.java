@@ -7,6 +7,11 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * APIClient defines how data is fetched from the web service.
+ * <p>
+ * Miasto Stołeczne Warszawa (http://api.um.warszawa.pl)
+ */
 public interface APIClient {
     String baseURL = "https://api.um.warszawa.pl/api/action/busestrams_get/";
 
