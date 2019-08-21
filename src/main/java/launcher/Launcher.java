@@ -47,10 +47,26 @@ public class Launcher {
 
     private static void basicInit() {
         // TODO: move to config file
-        queriedRoutes.put("523", 1);
-        queriedRoutes.put("122", 1);
-        queriedRoutes.put("220", 1);
+        queriedRoutes.put("L-6", 1);
         queriedRoutes.put("10", 2);
+        queriedRoutes.put("20", 2);
+        queriedRoutes.put("23", 2);
         queriedRoutes.put("24", 2);
+        queriedRoutes.put("26", 2);
+        queriedRoutes.put("28", 2);
+        queriedRoutes.put("109", 1);
+        queriedRoutes.put("112", 1);
+        queriedRoutes.put("122", 1);
+        queriedRoutes.put("149", 1);
+        queriedRoutes.put("154", 1);
+        queriedRoutes.put("171", 1);
+        queriedRoutes.put("184", 1);
+        queriedRoutes.put("190", 1);
+        queriedRoutes.put("220", 1);
+        queriedRoutes.put("523", 1);
+        queriedRoutes.put("N01", 1);
+        queriedRoutes.put("N43", 1);
+        queriedRoutes.put("N45", 1);
+        queriedRoutes.put("N95", 1);
     }
 }
